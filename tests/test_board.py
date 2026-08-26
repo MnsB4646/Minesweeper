@@ -1,13 +1,10 @@
-import sys
-from pathlib import Path
 from unittest.mock import patch
 
 import pytest
 
 
-sys.path.insert(0, str(Path(__file__).parents[1] / "src"))
 
-from board import Board
+from src.board import Board
 
 
 def test_init_creates_empty_board_and_state():
