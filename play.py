@@ -3,6 +3,7 @@ import pygame
 from src.game import Game
 from src.enums import GameState
 from src.agents.random_agent import RandomAgent
+from src.agents.good_agent import GoodAgent
 
 # --- Configuration & Colors ---
 CELL_SIZE = 40
@@ -44,7 +45,7 @@ def draw_board(screen, font, game):
                 text_rect = text.get_rect(center=rect.center)
                 screen.blit(text, text_rect)
 
-def play_and_watch(agent, width=9, height=9, mines=10):
+def play_and_watch(agent, width=9, height=9, mines=20):
     """Main graphical loop."""
     pygame.init()
     
@@ -87,5 +88,5 @@ def play_and_watch(agent, width=9, height=9, mines=10):
     sys.exit()
 
 if __name__ == "__main__":
-    bot = RandomAgent()
+    bot = GoodAgent()
     play_and_watch(bot)

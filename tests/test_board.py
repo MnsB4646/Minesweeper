@@ -86,25 +86,50 @@ def test_flag_does_not_change_revealed_cells():
 
 
 def test_place_mines_places_requested_count_and_keeps_first_cell_safe():
-    board = Board(3, 2, 2)
+    board = Board(5, 5, 2)
 
-    with patch("random.randint", side_effect=[1, 1, 0, 0, 0, 0, 2, 1]):
-        board.place_mines(1, 1)
+    with patch("random.randint", side_effect=[2, 2, 1, 1, 4, 4, 0, 0]):
+        board.place_mines(2, 2)
 
-    assert board.mines == {(0, 0), (2, 1)}
-    assert board.board == [[-1, 0, 0], [0, 0, -1]]
-    assert (1, 1) not in board.mines
+    assert board.mines == {(4, 4), (0, 0)}
+    assert board.board[4][4] == -1
+    assert board.board[0][0] == -1
+    assert (2, 2) not in board.mines
+
+
+def test_place_mines_keeps_all_neighbors_of_first_click_safe():
+    board = Board(5, 5, 1)
+    invalid_coordinates = [
+        (x, y)
+        for y in range(1, 4)
+        for x in range(1, 4)
+        if (x, y) != (2, 2)
+    ]
+    random_values = [coordinate for point in invalid_coordinates for coordinate in point]
+    random_values.extend([0, 0])
+
+    with patch("random.randint", side_effect=random_values):
+        board.place_mines(2, 2)
+
+    neighbors = {
+        (x, y)
+        for x in range(1, 4)
+        for y in range(1, 4)
+        if (x, y) != (2, 2)
+    }
+    assert board.mines == {(0, 0)}
+    assert board.mines.isdisjoint(neighbors | {(2, 2)})
 
 
 def test_place_mines_does_not_place_mines_on_revealed_cells():
-    board = Board(3, 1, 1)
+    board = Board(5, 3, 1)
     board.revealed.add((0, 0))
 
-    with patch("random.randint", side_effect=[0, 0, 2, 0, 1, 0]):
+    with patch("random.randint", side_effect=[0, 0, 1, 1, 4, 2]):
         board.place_mines(2, 0)
 
-    assert board.mines == {(1, 0)}
-    assert board.board == [[0, -1, 0]]
+    assert board.mines == {(4, 2)}
+    assert board.board[2][4] == -1
 
 
 def test_calculate_adjacent_counts_updates_safe_cells_and_preserves_mines():

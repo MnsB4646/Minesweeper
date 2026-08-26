@@ -73,9 +73,9 @@ class Board:
         """
         Randomly populates the board with mines.
 
-        Ensures that the player's first clicked coordinate (x1, y1) is never 
-        a mine to guarantee a safe first move. Updates the underlying board 
-        array with -1 for mine locations.
+        Ensures that the player's first clicked coordinate and its neighboring
+        coordinates are never mines to guarantee a safe first move. Updates
+        the underlying board array with -1 for mine locations.
 
         Args:
             x1 (int): The x-coordinate of the first clicked cell.
@@ -85,7 +85,12 @@ class Board:
         while len(self.mines) < self.num_mines:
             x = random.randint(0, self.width - 1)
             y = random.randint(0, self.height - 1)
-            if (x, y) not in self.mines and (x, y) not in self.revealed and (x, y) != (x1, y1):
+            is_near_first_click = abs(x - x1) <= 1 and abs(y - y1) <= 1
+            if (
+                (x, y) not in self.mines
+                and (x, y) not in self.revealed
+                and not is_near_first_click
+            ):
                 self.mines.add((x, y))
                 self.board[y][x] = -1  # -1 represents a mine
 
