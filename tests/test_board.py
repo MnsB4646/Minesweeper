@@ -4,7 +4,7 @@ import pytest
 
 
 
-from src.board import Board
+from engine.board import Board
 
 
 def test_init_creates_empty_board_and_state():

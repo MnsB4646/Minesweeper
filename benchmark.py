@@ -1,10 +1,11 @@
 import time
-from src.game import Game
-from src.enums import GameState
+from src.engine.game import Game
+from src.engine.enums import GameState
 from src.agents.random_agent import RandomAgent
-from src.agents.good_agent import GoodAgent # Assuming you saved it here
+from src.agents.good_agent import GoodAgent
+from src.agents.neural_agent import NeuralAgent
 
-def run_benchmark(agent, num_games=100, width=20, height=20, num_mines=50):
+def run_benchmark(agent, num_games=500, width=10, height=10, num_mines=10):
     """
     Runs a headless simulation of the game and calculates performance statistics.
     """
@@ -63,9 +64,13 @@ def run_benchmark(agent, num_games=100, width=20, height=20, num_mines=50):
 
 if __name__ == "__main__":
     # Benchmark the dummy bot
-    random_bot = RandomAgent()
-    run_benchmark(random_bot, num_games=1000)
+    # random_bot = RandomAgent()
+    # run_benchmark(random_bot)
     
     # Benchmark the smart bot
     good_bot = GoodAgent()
-    run_benchmark(good_bot, num_games=1000)
+    run_benchmark(good_bot)
+
+    # Benchmark the smart bot
+    neural_bot = NeuralAgent(model_path="checkpoints/best_model.pt")
+    run_benchmark(neural_bot)

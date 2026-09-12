@@ -2,9 +2,9 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from src.board import Board
-from src.enums import GameState
-from src.game import Game
+from engine.board import Board
+from engine.enums import GameState
+from engine.game import Game
 
 
 def test_init_creates_board_and_starts_ongoing():
