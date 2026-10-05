@@ -1,6 +1,9 @@
 import numpy as np
-from engine.game import Game
-from engine.enums import GameState
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+from src.engine.game import Game
+from src.engine.enums import GameState
 from src.agents.good_agent import GoodAgent
 
 def generate_dataset(num_games=1000, width=9, height=9, num_mines=10, filename="minesweeper_dataset.npz"):

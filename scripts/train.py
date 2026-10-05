@@ -3,13 +3,16 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, random_split
 
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from src.ml.dataset import MinesweeperDataset
 from src.ml.model import MinesweeperCNN
 
 # --- Hyperparameters & Config ---
 DATASET_PATH = "minesweeper_dataset.npz"
 CHECKPOINT_DIR = "checkpoints"
-MODEL_SAVE_PATH = os.path.join(CHECKPOINT_DIR, "best_model.pt")
+MODEL_SAVE_PATH = os.path.join(CHECKPOINT_DIR, "model_new.pt")
 
 BATCH_SIZE = 64
 LEARNING_RATE = 1e-3

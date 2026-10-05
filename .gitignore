@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Environments
+.venv/
+env/
+venv/
+
+# Data and Artifacts
+*.npz
+data/
+*.log
+
+# Checkpoints (ignore all except the default baseline/best model)
+checkpoints/*
+!checkpoints/best_model.pt
+
+# Editor settings
+.vscode/
+.idea/

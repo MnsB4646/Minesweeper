@@ -15,24 +15,25 @@ class MinesweeperCNN(nn.Module):
         # up to 9 blocks away, which is enough to span a whole beginner board.
         self.network = nn.Sequential(
             # Layer 1: Extract basic features (edges, corners, number values)
-            nn.Conv2d(in_channels, hidden_channels, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=10, out_channels=16, kernel_size=3, padding=1),
             nn.ReLU(),
             
             # Layer 2: Combine features to find 1-2-1 or 1-2-2-1 logic patterns
-            nn.Conv2d(hidden_channels, hidden_channels, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=16, out_channels=16, kernel_size=3, padding=1),
             nn.ReLU(),
             
             # Layer 3: Deep spatial reasoning
-            nn.Conv2d(hidden_channels, hidden_channels, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=16, out_channels=16, kernel_size=3, padding=1),
             nn.ReLU(),
             
             # Layer 4: Deep spatial reasoning
-            nn.Conv2d(hidden_channels, hidden_channels, kernel_size=3, padding=1),
+            nn.Conv2d(in_channels=16, out_channels=16, kernel_size=3, padding=1),
             nn.ReLU(),
+
             
             # Output Layer: Collapse the 64 hidden channels down to 1 channel.
             # A 1x1 convolution acts as a final scoring mechanism for each specific cell.
-            nn.Conv2d(hidden_channels, 1, kernel_size=1),
+            nn.Conv2d(in_channels=16, out_channels=1, kernel_size=1),
             
             # Sigmoid activation forces the raw output into a strict 0.0 to 1.0 probability
             nn.Sigmoid()
